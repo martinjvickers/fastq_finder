@@ -1,13 +1,52 @@
 # fastq_finder
 
-Getting this to compile on work machine;
+A program to quickly search the first read header of a fastq file to match an instrument ID and a run number
+
+##Static binary for centos6/7 and ubuntu 12+
+
+
+
+##Compile from source
+
+Getting this to compile on a ubuntu machine;
 
 ```
-~/cmake-3.6.0-rc2-Linux-x86_64/bin/cmake ../fastq_finder -DCMAKE_MODULE_PATH=../seqan/util/cmake -DSEQAN_INCLUDE_PATH=../seqan/include -DCMAKE_CXX_FLAGS=-std=c++14 -DCMAKE_BUILD_TYPE=Release
+sudo apt-get install git g++ build-essential cmake zlib1g-dev libbz2-dev libboost-all-dev
+git clone https://github.com/seqan/seqan.git seqan
+git clone https://github.com/martinjvickers/fastq_finder.git
+cd fastq_finder
+cmake ../fastq_finder -DCMAKE_MODULE_PATH=../seqan/util/cmake -DSEQAN_INCLUDE_PATH=../seqan/include -DCMAKE_CXX_FLAGS=-std=c++14 -DCMAKE_BUILD_TYPE=Release
+make
 ```
 
-Example run
+Example run from the top directory containing the fasta files you want to search for.
 
 ```
-find . -regex '.*\.\(fastq\|fastq.gz\|fq\|fq.gz\)' -type f | awk '{print "./fastq_finder -i "$i" -id HWI-ST665R -r 135"}'|sh
+find . -regex '.*\.\(fastq\|fastq.gz\|fq\|fq.gz\)' -type f | awk '{print "./fastq_finder -i \""$i"\" -id HWI-ST665R -r 135"}'|sh
 ```
+
+This will list all your fastq\|fastq.gz\|fq\|fq.gz files and then run the program looking for the instrument id HWI-ST665R and the run 135. Unless there is an error with trying to read the input file (e.g. unexpected end of file or weird character in the sequence file) you should only see something print to screen if there is a match, like so.
+
+```
+[martin@x250 data]$ find . -regex '.*\.\(fastq\|fastq.gz\|fq\|fq.gz\)' -type f | awk '{print "fastq_finder -i \""$i"\" -id HWI-ST665R -r 123"}'|sh
+./XFDZR02_Run1_tair10/XFDZR02_NoIndex_L007_R1_021.fastq.gz matches instrument ID HWI-ST665R and run_num 123
+./XFDZR02_Run1_tair10/XFDZR02_NoIndex_L007_R1_034.fastq.gz matches instrument ID HWI-ST665R and run_num 123
+./XFDZR02_Run1_tair10/XFDZR02_NoIndex_L007_R1_010.fastq.gz matches instrument ID HWI-ST665R and run_num 123
+./XFDZR02_Run1_tair10/XFDZR02_NoIndex_L007_R1_004.fastq.gz matches instrument ID HWI-ST665R and run_num 123
+```
+
+If you want to see everything it doesn't match, add the -v flag;
+
+```
+[martin@x250 data]$ find . -regex '.*\.\(fastq\|fastq.gz\|fq\|fq.gz\)' -type f | awk '{print "fastq_finder -i \""$i"\" -id HWI-ST665R -r 123 -v"}'|sh
+...
+./XFDZR02_Run1_tair10/XFDZR02_NoIndex_L007_R1_003.fastq.gz matches instrument ID HWI-ST665R and run_num 123
+./XFDZR02_Run1_tair10/XFDZR02_NoIndex_L007_R1_009.fastq.gz matches instrument ID HWI-ST665R and run_num 123
+./XFDZR02_Run1_tair10/XFDZR02_NoIndex_L007_R1_023.fastq.gz matches instrument ID HWI-ST665R and run_num 123
+./pol5_veg_XFDZ015G/trimmed_fastq/pol5_veg_XFDZ015G_SDXF14_75.fq NO MATCH.
+./pol5_veg_XFDZ015G/trimmed_fastq/pol5_veg_XFDZ015G_SDXF14_L001.fq.gz NO MATCH.
+./pol5_veg_XFDZ015G/trimmed_fastq/pol5_veg_XFDZ015G_SDXF14_76.fq NO MATCH.
+./pol5_veg_XFDZ015G/trimmed_fastq/pol5_veg_XFDZ015G_SDXF14_L002.fq.gz NO MATCH.
+```
+
+

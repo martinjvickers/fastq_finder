@@ -37,11 +37,15 @@ cmake ../fastq_finder -DCMAKE_MODULE_PATH=../seqan/util/cmake -DSEQAN_INCLUDE_PA
 make
 ```
 
+### Example run
+
 Example run from the top directory containing the fasta files you want to search for.
 
 ```
 find . -regex '.*\.\(fastq\|fastq.gz\|fq\|fq.gz\)' -type f | awk '{print "./fastq_finder -i \""$i"\" -id HWI-ST665R -r 135"}'|sh
 ```
+
+### The output
 
 This will list all your fastq\|fastq.gz\|fq\|fq.gz files and then run the program looking for the instrument id HWI-ST665R and the run 135. Unless there is an error with trying to read the input file (e.g. unexpected end of file or weird character in the sequence file) you should only see something print to screen if there is a match, like so.
 

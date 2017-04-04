@@ -4,6 +4,8 @@ A program to quickly search the first read header of a fastq file to match an in
 
 ## Static binary for centos6/7 and ubuntu 12+
 
+[Download Latest Static Binary](https://github.com/martinjvickers/fastq_finder/releases/download/v0.0.1/fastq_finder_v0.0.1.tar.gz)
+
 ```
 [martin@x250 dev]$ wget https://github.com/martinjvickers/fastq_finder/releases/download/v0.0.1/fastq_finder_v0.0.1.tar.gz
 [martin@x250 dev]$ tar xvf fastq_finder_v0.0.1.tar.gz

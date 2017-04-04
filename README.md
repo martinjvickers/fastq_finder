@@ -44,10 +44,11 @@ Example run from the top directory containing the fasta files you want to search
 ```
 find . -regex '.*\.\(fastq\|fastq.gz\|fq\|fq.gz\)' -type f | awk '{print "./fastq_finder -i \""$i"\" -id HWI-ST665R -r 135"}'|sh
 ```
+This will list all your fastq\|fastq.gz\|fq\|fq.gz files and then run the program looking for the instrument id HWI-ST665R and the run 135. 
 
 ### The output
 
-This will list all your fastq\|fastq.gz\|fq\|fq.gz files and then run the program looking for the instrument id HWI-ST665R and the run 135. Unless there is an error with trying to read the input file (e.g. unexpected end of file or weird character in the sequence file) you should only see something print to screen if there is a match, like so.
+Unless there is an error with trying to read the input file (e.g. unexpected end of file or weird character in the sequence file) you should only see something print to screen if there is a match, like so.
 
 ```
 [martin@x250 data]$ find . -regex '.*\.\(fastq\|fastq.gz\|fq\|fq.gz\)' -type f | awk '{print "fastq_finder -i \""$i"\" -id HWI-ST665R -r 123"}'|sh

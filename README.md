@@ -2,11 +2,27 @@
 
 A program to quickly search the first read header of a fastq file to match an instrument ID and a run number
 
-##Static binary for centos6/7 and ubuntu 12+
+## Static binary for centos6/7 and ubuntu 12+
+
+```
+[martin@x250 dev]$ wget https://github.com/martinjvickers/fastq_finder/releases/download/v0.0.1/fastq_finder_v0.0.1.tar.gz
+[martin@x250 dev]$ tar xvf fastq_finder_v0.0.1.tar.gz
+[martin@x250 dev]$ ./fastq_finder 
+fastq finder - Fastq match
+==========================
+    fastq finder -i totest.fastq.gz -id HWI-ST665R -r 135 [OPTIONS]
+    Try 'fastq finder --help' for more information.
+
+VERSION
+    Last update: April 2017
+    fastq finder version: 0.0.1
+    SeqAn version: 2.2.1
+ERROR: Could not open the file. 
+
+```
 
 
-
-##Compile from source
+## Compile from source
 
 Getting this to compile on a ubuntu machine;
 
